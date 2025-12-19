@@ -21,7 +21,7 @@ export default function Sidebar() {
         />
         <div>
           <p className="font-semibold">Hi, Hari!</p>
-          <p className="text-sm text-blue-200">hari@example.com</p>
+          <p className="text-sm text-blue-200">hari@gmail.com</p>
         </div>
       </div>
 

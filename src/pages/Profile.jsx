@@ -3,8 +3,8 @@ import DashboardLayout from "../components/layout/DashboardLayout";
 
 export default function Profile() {
   const [profile, setProfile] = useState({
-    name: "Sarah Johnson",
-    email: "sarah@example.com",
+    name: "Hari",
+    email: "hari@gmail.com",
     phone: "9876543210",
     address: "Flat 203, Green Residency, Hyderabad",
   });
