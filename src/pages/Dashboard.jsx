@@ -35,7 +35,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <BookingCard
             title="Home Cleaning"
-            date="May 20, 2024 | 2:00 PM"
+            date="Dec 10, 2025 | 12:00 PM"
             price="$80"
             status="In Progress"
             color="bg-green-500"
@@ -44,7 +44,7 @@ export default function Dashboard() {
 
           <BookingCard
             title="Yoga Session"
-            date="May 18, 2024 | 10:00 AM"
+            date="Dec 08, 2025 | 10:00 AM"
             price="$50"
             status="Completed"
             color="bg-blue-500"
@@ -54,7 +54,7 @@ export default function Dashboard() {
           {/* FIXED PLUMBING IMAGE */}
           <BookingCard
             title="Plumbing Repair"
-            date="May 15, 2024 | 4:00 PM"
+            date="Dec 12, 2025 | 5:00 PM"
             price="$120"
             status="Cancelled"
             color="bg-red-500"
