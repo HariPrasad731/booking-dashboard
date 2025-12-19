@@ -1,4 +1,4 @@
-import Sidebar from "../components/layout/Sidebar";
+import DashboardLayout from "../components/layout/DashboardLayout";
 
 const payments = [
   {
@@ -26,77 +26,51 @@ const payments = [
 
 export default function Payments() {
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
-      
-      {/* SIDEBAR */}
-      <aside
-        style={{
-          width: "260px",
-          backgroundColor: "#1e3a8a",
-          color: "white",
-          padding: "24px",
-        }}
-      >
-        <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "24px" }}>
-          Booking App
-        </h2>
-        <Sidebar />
-      </aside>
+    <DashboardLayout>
+      <h1 className="text-2xl font-bold mb-6">
+        Payments & Invoices
+      </h1>
 
-      {/* MAIN CONTENT */}
-      <main style={{ flex: 1, padding: "32px" }}>
-        <h1 style={{ fontSize: "28px", fontWeight: "bold", marginBottom: "24px" }}>
-          Payments & Invoices
-        </h1>
-
+      {/* RESPONSIVE GRID */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {payments.map((payment) => (
           <div
             key={payment.id}
-            style={{
-              background: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              marginBottom: "16px",
-              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-            }}
+            className="bg-white p-6 rounded-xl shadow"
           >
-            <p><strong>Booking ID:</strong> {payment.bookingId}</p>
-            <p><strong>Amount Paid:</strong> ${payment.amount}</p>
-            <p><strong>Date:</strong> {payment.date}</p>
+            <p>
+              <span className="font-semibold">Booking ID:</span>{" "}
+              {payment.bookingId}
+            </p>
+
+            <p className="mt-1">
+              <span className="font-semibold">Amount Paid:</span>{" "}
+              ${payment.amount}
+            </p>
+
+            <p className="mt-1">
+              <span className="font-semibold">Date:</span>{" "}
+              {payment.date}
+            </p>
 
             <span
-              style={{
-                display: "inline-block",
-                marginTop: "8px",
-                padding: "6px 14px",
-                borderRadius: "20px",
-                fontSize: "12px",
-                color: "white",
-                backgroundColor:
-                  payment.status === "Paid" ? "#16a34a" : "#dc2626",
-              }}
+              className={`inline-block mt-3 px-4 py-1 rounded-full text-sm text-white ${
+                payment.status === "Paid"
+                  ? "bg-green-500"
+                  : "bg-red-500"
+              }`}
             >
               {payment.status}
             </span>
 
-            <div style={{ marginTop: "12px" }}>
-              <button
-                style={{
-                  padding: "8px 14px",
-                  backgroundColor: "#2563eb",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "6px",
-                  cursor: "pointer",
-                  fontSize: "13px",
-                }}
-              >
+            <div className="mt-4">
+              <button className="bg-blue-600 text-white px-4 py-2 rounded">
                 Download Invoice
               </button>
             </div>
           </div>
         ))}
-      </main>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }

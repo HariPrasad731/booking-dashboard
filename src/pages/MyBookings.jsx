@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Sidebar from "../components/layout/Sidebar";
+import DashboardLayout from "../components/layout/DashboardLayout";
 
 const initialBookings = [
   {
@@ -37,87 +37,102 @@ export default function MyBookings() {
       : bookings.filter((b) => b.status === filter);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
-      <aside style={{ width: 260, background: "#1e3a8a", color: "white", padding: 24 }}>
-        <h2 style={{ marginBottom: 24 }}>Booking App</h2>
-        <Sidebar />
-      </aside>
+    <DashboardLayout>
+      <h1 className="text-2xl font-bold mb-6">My Bookings</h1>
 
-      <main style={{ flex: 1, padding: 32 }}>
-        <h1 style={{ fontSize: 28, marginBottom: 20 }}>My Bookings</h1>
+      {/* FILTER */}
+      <select
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        className="mb-6 p-2 border rounded"
+      >
+        <option>All</option>
+        <option>In Progress</option>
+        <option>Completed</option>
+        <option>Cancelled</option>
+      </select>
 
-        {/* FILTER */}
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          style={{ marginBottom: 20 }}
-        >
-          <option>All</option>
-          <option>In Progress</option>
-          <option>Completed</option>
-          <option>Cancelled</option>
-        </select>
-
+      {/* BOOKINGS LIST */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredBookings.map((b) => (
           <div
             key={b.id}
-            style={{
-              background: "white",
-              padding: 20,
-              marginBottom: 16,
-              borderRadius: 8,
-            }}
+            className="bg-white p-6 rounded-xl shadow"
           >
             <Link to={`/bookings/${b.id}`}>
-              <h3>{b.service}</h3>
+              <h3 className="font-semibold text-lg">
+                {b.service}
+              </h3>
             </Link>
-            <p>{b.date}</p>
-            <p>Price: ${b.price}</p>
-            <strong>{b.status}</strong>
+
+            <p className="text-gray-500 text-sm mt-1">
+              {b.date}
+            </p>
+
+            <p className="mt-2 font-semibold">
+              Price: ${b.price}
+            </p>
+
+            <span
+              className={`inline-block mt-3 px-4 py-1 rounded-full text-white text-sm
+                ${
+                  b.status === "In Progress"
+                    ? "bg-green-500"
+                    : b.status === "Completed"
+                    ? "bg-blue-500"
+                    : "bg-red-500"
+                }`}
+            >
+              {b.status}
+            </span>
 
             {/* ACTIONS */}
-            <div style={{ marginTop: 10 }}>
+            <div className="mt-4 flex gap-3">
               <button
                 onClick={() =>
                   setBookings(
                     bookings.map((x) =>
-                      x.id === b.id ? { ...x, status: "Cancelled" } : x
+                      x.id === b.id
+                        ? { ...x, status: "Cancelled" }
+                        : x
                     )
                   )
                 }
-                style={{ marginRight: 10, color: "red" }}
+                className="text-red-600"
               >
                 Cancel
               </button>
 
-              <button onClick={() => setShowModal(true)}>
+              <button
+                onClick={() => setShowModal(true)}
+                className="text-blue-600"
+              >
                 Reschedule
               </button>
             </div>
           </div>
         ))}
+      </div>
 
-        {/* RESCHEDULE MODAL */}
-        {showModal && (
-          <div
-            style={{
-              position: "fixed",
-              inset: 0,
-              background: "rgba(0,0,0,0.4)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ background: "white", padding: 20 }}>
-              <h3>Reschedule Booking</h3>
-              <input type="date" />
-              <br /><br />
-              <button onClick={() => setShowModal(false)}>Save</button>
+      {/* MODAL */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg">
+            <h3 className="font-semibold mb-4">
+              Reschedule Booking
+            </h3>
+            <input type="date" className="border p-2" />
+            <div className="mt-4 text-right">
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-blue-600 text-white px-4 py-2 rounded"
+              >
+                Save
+              </button>
             </div>
           </div>
-        )}
-      </main>
-    </div>
+        </div>
+      )}
+    </DashboardLayout>
   );
 }

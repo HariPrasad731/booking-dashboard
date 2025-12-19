@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Sidebar from "../components/layout/Sidebar";
+import DashboardLayout from "../components/layout/DashboardLayout";
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState([
@@ -19,84 +19,50 @@ export default function Notifications() {
   const clearAll = () => setNotifications([]);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f3f4f6" }}>
-      
-      <aside
-        style={{
-          width: "260px",
-          background: "#1e3a8a",
-          color: "white",
-          padding: "24px",
-        }}
-      >
-        <h2 style={{ fontWeight: "bold", marginBottom: "24px" }}>
-          Booking App
-        </h2>
-        <Sidebar />
-      </aside>
+    <DashboardLayout>
+      {/* HEADER */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+        <h1 className="text-2xl font-bold">Notifications</h1>
 
-      <main style={{ flex: 1, padding: "32px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <h1 style={{ fontSize: "28px", fontWeight: "bold" }}>
-            Notifications
-          </h1>
-
-          {notifications.length > 0 && (
-            <button
-              onClick={clearAll}
-              style={{
-                background: "#dc2626",
-                color: "white",
-                padding: "8px 14px",
-                borderRadius: "6px",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              Clear All
-            </button>
-          )}
-        </div>
-
-        {notifications.length === 0 && (
-          <p style={{ marginTop: "20px", color: "#6b7280" }}>
-            No notifications available
-          </p>
+        {notifications.length > 0 && (
+          <button
+            onClick={clearAll}
+            className="bg-red-600 text-white px-4 py-2 rounded"
+          >
+            Clear All
+          </button>
         )}
+      </div>
 
+      {/* EMPTY STATE */}
+      {notifications.length === 0 && (
+        <p className="text-gray-500">
+          No notifications available
+        </p>
+      )}
+
+      {/* NOTIFICATIONS LIST */}
+      <div className="space-y-4">
         {notifications.map((n) => (
           <div
             key={n.id}
-            style={{
-              background: "white",
-              padding: "16px",
-              marginTop: "16px",
-              borderRadius: "8px",
-              opacity: n.read ? 0.6 : 1,
-            }}
+            className={`bg-white p-4 rounded-lg shadow ${
+              n.read ? "opacity-60" : ""
+            }`}
           >
             <p>{n.text}</p>
 
             {!n.read && (
               <button
                 onClick={() => markAsRead(n.id)}
-                style={{
-                  marginTop: "8px",
-                  background: "#2563eb",
-                  color: "white",
-                  padding: "6px 12px",
-                  borderRadius: "6px",
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: "12px",
-                }}
+                className="mt-3 text-sm bg-blue-600 text-white px-3 py-1 rounded"
               >
                 Mark as Read
               </button>
             )}
           </div>
         ))}
-      </main>
-    </div>
+      </div>
+    </DashboardLayout>
   );
 }
